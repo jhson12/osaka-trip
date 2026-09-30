@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>오사카 여행 경비 정산</title>
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.css">
+<style>
+  :root{
+    --sky-deep:#C0543D;
+    --sky-mid:#E0906A;
+    --sky-light:#FBF2E7;
+    --coral:#E0673F;
+    --navy:#4A2E22;
+    --navy-soft:#7A5646;
+    --card:#FFFFFF;
+    --line:rgba(74,46,34,0.14);
+    --muted:#9C8170;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{ overflow-x:hidden; width:100%; }
+  body{
+    font-family:'Pretendard Variable','Pretendard','Malgun Gothic',sans-serif;
+    background:var(--sky-light);
+    color:var(--navy);
+    -webkit-font-smoothing:antialiased;
+    padding-bottom:90px;
+    overflow-x:hidden;
+    width:100%;
+  }
+
+  .hero{
+    padding:44px 20px 32px;
+    background:linear-gradient(180deg, var(--sky-deep) 0%, var(--sky-mid) 100%);
+    color:#fff;
+  }
+  .hero-eyebrow{ font-size:12px; letter-spacing:.18em; color:rgba(255,255,255,0.85); text-transform:uppercase; margin-bottom:10px; }
+  .hero h1{ font-size:28px; font-weight:700; margin-bottom:4px; }
+  .hero-sub{ font-size:13px; color:rgba(255,255,255,0.85); }
+
+  .summary-bar{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    background:var(--card);
+    border-bottom:1px solid var(--line);
+  }
+  .summary-item{
+    padding:14px 8px;
+    text-align:center;
+    border-right:1px solid var(--line);
+  }
+  .summary-item:last-child{ border-right:none; }
+  .summary-item .name{ font-size:11px; color:var(--muted); }
+  .summary-item .amt{ font-size:17px; font-weight:700; margin-top:4px; }
+
+  section{ padding:28px 18px 8px; }
+  .sec-head{ display:flex; align-items:center; gap:8px; margin-bottom:14px; }
+  .sec-head .tag{ font-size:11px; color:var(--sky-deep); border:1px solid var(--sky-deep); padding:2px 8px; border-radius:4px; }
+  .sec-head h2{ font-size:18px; font-weight:700; }
+
+  .card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:16px;
+    margin-bottom:14px;
+    box-shadow:0 4px 14px rgba(18,60,94,0.06);
+  }
+
+  label{ font-size:12px; color:var(--muted); display:block; margin-bottom:4px; }
+  input[type="text"], input[type="number"], input[type="date"], select{
+    width:100%;
+    max-width:100%;
+    min-width:0;
+    font-size:14px;
+    padding:9px 10px;
+    border-radius:8px;
+    border:1px solid var(--line);
+    background:#fff;
+    color:var(--navy);
+    font-family:inherit;
+    box-sizing:border-box;
+  }
+  input[type="date"]{ -webkit-appearance:none; appearance:none; }
+  .row2{ display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:10px; }
+  .field{ margin-bottom:10px; }
+
+  .toggle-group{ display:flex; gap:6px; }
+  .toggle-group button{
+    flex:1;
+    padding:8px;
+    border-radius:8px;
+    border:1.5px solid var(--line);
+    background:#fff;
+    color:var(--navy-soft);
+    font-size:13px;
+    font-weight:600;
+    cursor:pointer;
+  }
+  .toggle-group button.active{ border-color:var(--sky-deep); background:rgba(192,84,61,0.08); color:var(--sky-deep); }
+
+  .btn-primary{
+    width:100%;
+    padding:12px;
+    border-radius:10px;
+    border:none;
+    background:var(--sky-deep);
+    color:#fff;
+    font-size:14px;
+    font-weight:700;
+    cursor:pointer;
+    margin-top:4px;
+  }
+  .btn-primary:active{ background:var(--navy); }
+
+  .rate-row{ display:flex; align-items:center; gap:8px; font-size:12px; color:var(--muted); margin-top:2px; flex-wrap:wrap; }
+  .rate-row input{ width:80px; padding:5px 7px; font-size:12px; }
+
+  .date-group{ margin-bottom:18px; }
+  .date-head{
+    font-size:13px; font-weight:700; color:var(--navy);
+    padding:4px 0 8px;
+    border-bottom:2px solid var(--sky-deep);
+    margin-bottom:10px;
+    display:flex; justify-content:space-between; align-items:baseline;
+  }
+  .date-head .d-total{ font-size:12px; color:var(--muted); font-weight:600; }
+
+  .expense-item{
+    display:flex; justify-content:space-between; align-items:flex-start;
+    padding:10px 0;
+    border-bottom:1px solid var(--line);
+    gap:10px;
+  }
+  .expense-item:last-child{ border-bottom:none; }
+  .expense-main{ flex:1; min-width:0; }
+  .expense-desc{ font-size:14px; font-weight:600; }
+  .expense-cat{ display:inline-block; font-size:10px; font-weight:700; padding:2px 7px; border-radius:100px; background:rgba(192,84,61,0.1); color:var(--sky-deep); margin-top:5px; }
+  .expense-amt{ text-align:right; flex-shrink:0; }
+  .expense-amt .krw{ font-size:14px; font-weight:700; }
+  .expense-amt .orig{ font-size:11px; color:var(--muted); }
+  .del-btn{ background:none; border:none; color:var(--coral); font-size:11px; cursor:pointer; margin-top:4px; padding:0; }
+
+  .empty-note{ font-size:13px; color:var(--muted); text-align:center; padding:24px 0; }
+
+  footer{ text-align:center; padding:30px 20px 10px; font-size:11px; color:var(--muted); }
+
+  .total-row{ display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid var(--line); font-size:14px; }
+  .total-row:last-child{ border-bottom:none; }
+  .total-row .t-name{ display:flex; align-items:center; gap:8px; font-weight:600; }
+  .total-row .t-amt{ font-weight:700; }
+  .total-row.grand{ border-top:2px solid var(--navy); border-bottom:none; margin-top:4px; padding-top:14px; font-size:16px; }
+  .total-row.sub .t-name, .total-row.sub .t-amt{ font-size:12px; font-weight:600; color:var(--muted); }
+  .cat-row{ margin-bottom:12px; }
+  .cat-row:last-child{ margin-bottom:0; }
+  .cat-head{ display:flex; justify-content:space-between; font-size:13px; font-weight:600; margin-bottom:5px; }
+  .cat-head .pct{ color:var(--muted); font-weight:500; margin-left:6px; font-size:11px; }
+  .bar-track{ height:8px; border-radius:100px; background:rgba(74,46,34,0.08); overflow:hidden; }
+  .bar-fill{ height:100%; border-radius:100px; background:var(--sky-deep); }
+  .btn-notion{ width:100%; padding:12px; border-radius:10px; border:none; background:#2b2b2b; color:#fff; font-size:14px; font-weight:700; cursor:pointer; margin-top:4px; }
+  .btn-notion:disabled{ opacity:.6; }
+  .status-line{ font-size:12px; color:var(--muted); text-align:center; margin-top:8px; min-height:16px; }
+  .status-line.err{ color:var(--coral); }
+  .status-line.ok{ color:var(--sky-deep); }
+  .app-page{ display:none; }
+  .app-page.active{ display:block; }
+
+  .bottom-nav{
+    position:fixed; left:0; right:0; bottom:0;
+    display:flex;
+    background:#fff;
+    border-top:1px solid var(--line);
+    box-shadow:0 -6px 20px rgba(18,60,94,0.1);
+    z-index:60;
+    padding-bottom:env(safe-area-inset-bottom, 0);
+  }
+  .nav-item{ flex:1; text-align:center; padding:9px 0 8px; font-size:11px; font-weight:600; color:var(--muted); cursor:pointer; }
+  .nav-item .nav-icon{ font-size:19px; line-height:1.2; margin-bottom:2px; }
+  .nav-item.active{ color:var(--sky-deep); }
+</style>
+</head>
+<body>
+
+  <div class="hero">
+    <div class="hero-eyebrow">OSAKA · FAMILY TRIP</div>
+    <h1>오사카 여행 경비 정산</h1>
+    <div class="hero-sub">엄마 · 아빠 · 윤우 · 2026.10.03-07</div>
+  </div>
+
+  <div class="summary-bar" id="summaryBar"></div>
+
+  <div class="app-page active" id="page-add">
+  <section>
+    <div class="sec-head">
+      <span class="tag">ADD</span>
+      <h2>경비 등록</h2>
+    </div>
+    <div class="card">
+      <div class="field">
+        <label>날짜</label>
+        <input type="date" id="inDate" value="2026-10-03" max="2026-10-08">
+      </div>
+      <div class="field">
+        <label>항목명</label>
+        <input type="text" id="inDesc" placeholder="예: 저녁식사 - 도톤보리">
+      </div>
+      <div class="row2">
+        <div class="field" style="margin-bottom:0;">
+          <label>통화</label>
+          <div class="toggle-group">
+            <button type="button" id="btnKRW" class="active" onclick="setCurrency('KRW')">원 (KRW)</button>
+            <button type="button" id="btnJPY" onclick="setCurrency('JPY')">엔 (JPY)</button>
+          </div>
+        </div>
+        <div class="field" style="margin-bottom:0;">
+          <label>금액</label>
+          <input type="number" id="inAmount" placeholder="0">
+        </div>
+      </div>
+      <div id="rateRow" class="rate-row" style="display:none;">
+        환율 100엔 =
+        <input type="number" id="inRate" value="890">
+        원
+      </div>
+      <div class="field" style="margin-top:12px;">
+        <label>구분</label>
+        <select id="inCategory">
+          <option value="교통">교통</option>
+          <option value="숙소">숙소</option>
+          <option value="식비">식비</option>
+          <option value="쇼핑">쇼핑</option>
+          <option value="입장료/체험">입장료/체험</option>
+          <option value="기타">기타</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>결제 수단</label>
+        <div class="toggle-group">
+          <button type="button" id="btnCard" class="active" onclick="setPayMethod('card')">💳 카드</button>
+          <button type="button" id="btnCash" onclick="setPayMethod('cash')">💵 현금</button>
+        </div>
+      </div>
+      <button class="btn-primary" onclick="addExpense()">경비 등록</button>
+    </div>
+  </section>
+  </div>
+
+  <div class="app-page" id="page-list">
+  <section>
+    <div class="sec-head">
+      <span class="tag">LIST</span>
+      <h2>날짜별 경비 내역</h2>
+    </div>
+    <div id="expenseList"></div>
+  </section>
+  </div>
+
+  <div class="app-page" id="page-total">
+  <section>
+    <div class="sec-head">
+      <span class="tag">TOTAL</span>
+      <h2>경비 합계</h2>
+    </div>
+    <div class="card" id="totalCard"></div>
+
+    <div class="sec-head" style="margin-top:22px;">
+      <span class="tag">CATEGORY</span>
+      <h2 style="font-size:15px;">카테고리별</h2>
+    </div>
+    <div class="card" id="categoryCard"></div>
+
+    <div class="sec-head" style="margin-top:22px;">
+      <span class="tag">PAYMENT</span>
+      <h2 style="font-size:15px;">결제 수단 · 통화별</h2>
+    </div>
+    <div class="card" id="payCard"></div>
+
+    <button class="btn-notion" id="notionSyncBtn" onclick="syncToNotion()">🔗 노션에 동기화</button>
+    <div class="status-line" id="notionSyncStatus"></div>
+  </section>
+  </div>
+
+  <footer>
+    OSAKA FAMILY TRIP · EXPENSE TRACKER
+    <div id="updatedAt" style="margin-top:4px;"></div>
+    <div id="saveStatus" class="status-line"></div>
+  </footer>
+
+  <nav class="bottom-nav">
+    <div class="nav-item active" data-page="add" onclick="setPage('add')"><div class="nav-icon">➕</div>등록</div>
+    <div class="nav-item" data-page="list" onclick="setPage('list')"><div class="nav-icon">📋</div>내역</div>
+    <div class="nav-item" data-page="total" onclick="setPage('total')"><div class="nav-icon">📊</div>합계</div>
+  </nav>
+
+<script>
+  const TRIP_START = '2026-10-03';
+  let EXPENSES = [];
+  let RATE = 890; // 100엔 = ? 원 (기본값. 시장환율 100엔≈870원대, 환전/카드 수수료 감안)
+  let dataLoaded = false;     // 서버에서 경비 목록을 한 번이라도 정상적으로 불러왔는지
+  let lastLocalChange = 0;    // 이 기기에서 마지막으로 경비를 바꾼 시각
+  let savingCount = 0;        // 저장 요청이 진행 중인 개수
+  const FAMILY_SIZE = 3;      // 엄마·아빠·윤우
+  let currentCurrency = 'KRW';
+  let currentPayMethod = 'card';
+
+  function setPage(page){
+    document.querySelectorAll('.app-page').forEach(function(el){ el.classList.remove('active'); });
+    document.getElementById('page-' + page).classList.add('active');
+    document.querySelectorAll('.nav-item').forEach(function(el){
+      el.classList.toggle('active', el.getAttribute('data-page') === page);
+    });
+    window.scrollTo(0, 0);
+  }
+
+  function setCurrency(cur){
+    currentCurrency = cur;
+    document.getElementById('btnKRW').classList.toggle('active', cur === 'KRW');
+    document.getElementById('btnJPY').classList.toggle('active', cur === 'JPY');
+    document.getElementById('rateRow').style.display = cur === 'JPY' ? 'flex' : 'none';
+  }
+
+  function setPayMethod(method){
+    currentPayMethod = method;
+    document.getElementById('btnCard').classList.toggle('active', method === 'card');
+    document.getElementById('btnCash').classList.toggle('active', method === 'cash');
+  }
+
+  function toKRW(amount, currency, rate){
+    if(currency === 'KRW') return amount;
+    return Math.round(amount / 100 * rate);
+  }
+
+  function fmt(n){ return Math.round(n).toLocaleString('ko-KR'); }
+
+  function addExpense(){
+    const date = document.getElementById('inDate').value;
+    const desc = document.getElementById('inDesc').value.trim();
+    const amount = parseFloat(document.getElementById('inAmount').value);
+    const category = document.getElementById('inCategory').value;
+    const rate = parseFloat(document.getElementById('inRate').value) || RATE;
+
+    if(!date){ alert('날짜를 선택해주세요.'); return; }
+    if(!desc){ alert('항목명을 입력해주세요.'); return; }
+    if(!amount || amount <= 0){ alert('금액을 입력해주세요.'); return; }
+
+    if(currentCurrency === 'JPY'){
+      RATE = rate;
+      saveRate();
+    }
+
+    const expense = {
+      id: 'exp_' + Date.now() + '_' + Math.floor(Math.random()*1000),
+      date: date,
+      desc: desc,
+      currency: currentCurrency,
+      amount: amount,
+      rateAtEntry: currentCurrency === 'JPY' ? rate : null,
+      category: category,
+      payMethod: currentPayMethod
+    };
+    mutateExpenses(function(list){
+      if(!list.some(function(x){ return x.id === expense.id; })) list.push(expense);
+      return list;
+    });
+
+    document.getElementById('inDesc').value = '';
+    document.getElementById('inAmount').value = '';
+  }
+
+  function deleteExpense(id){
+    if(!confirm('이 경비 항목을 삭제할까요?')) return;
+    mutateExpenses(function(list){
+      return list.filter(function(e){ return e.id !== id; });
+    });
+  }
+
+  function setSaveStatus(msg, kind){
+    const el = document.getElementById('saveStatus');
+    if(!el) return;
+    el.textContent = msg || '';
+    el.className = 'status-line' + (kind ? ' ' + kind : '');
+  }
+
+  // 경비 추가/삭제: 화면에 즉시 반영 → 서버의 최신 목록에 같은 변경을 다시 적용 → 저장
+  // (다른 기기에서 방금 등록한 경비가 덮어써져 사라지는 일을 줄이기 위함)
+  function mutateExpenses(mutator){
+    lastLocalChange = Date.now();
+    savingCount++;
+    EXPENSES = mutator(EXPENSES.slice());
+    renderAll();
+    setSaveStatus('저장 중...', '');
+
+    return fetch('/api/osaka-state?key=osaka_expenses')
+      .then(function(r){ return r.json(); })
+      .then(function(data){
+        if(data && data.success === true){
+          const base = Array.isArray(data.value) ? data.value : [];
+          EXPENSES = mutator(base.slice());
+          renderAll();
+        }
+      })
+      .catch(function(){ /* 서버 조회 실패 시 이 기기의 목록 그대로 저장 시도 */ })
+      .then(function(){
+        return fetch('/api/osaka-state', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ key: 'osaka_expenses', value: EXPENSES })
+        }).then(function(r){ return r.json(); });
+      })
+      .then(function(res){
+        if(!res || res.success === false){ throw new Error((res && res.error) ? res.error : '서버 응답 오류'); }
+        dataLoaded = true;
+        setSaveStatus('✅ 저장됨 (' + new Date().toLocaleTimeString('ko-KR') + ')', 'ok');
+      })
+      .catch(function(err){
+        setSaveStatus('⚠️ 서버 저장 실패: ' + err.message + ' — 이 기기 화면에만 반영됐어요. 인터넷 확인 후 다시 시도해 주세요.', 'err');
+      })
+      .then(function(){
+        savingCount--;
+        lastLocalChange = Date.now();
+      });
+  }
+
+  function computeTotals(){
+    let grand = 0, preTotal = 0, tripTotal = 0;
+    const byCategory = {};
+    EXPENSES.forEach(function(e){
+      const krw = toKRW(e.amount, e.currency, e.rateAtEntry || RATE);
+      grand += krw;
+      if(e.date < TRIP_START){ preTotal += krw; } else { tripTotal += krw; }
+      byCategory[e.category] = (byCategory[e.category] || 0) + krw;
+    });
+    return { grand: grand, preTotal: preTotal, tripTotal: tripTotal, byCategory: byCategory };
+  }
+
+  function renderSummary(){
+    const r = computeTotals();
+    const bar = document.getElementById('summaryBar');
+    let html = '<div class="summary-item"><div class="name">총 경비</div><div class="amt">' + fmt(r.grand) + '원</div></div>';
+    html += '<div class="summary-item"><div class="name">현지 사용</div><div class="amt">' + fmt(r.tripTotal) + '원</div></div>';
+    bar.innerHTML = html;
+  }
+
+  const TRIP_START_LABEL = '여행 전 사전 결제';
+
+  function buildDateCard(date, items, isPreTrip){
+    let dayTotal = 0;
+    let itemsHtml = '';
+    items.forEach(function(e){
+      const krw = toKRW(e.amount, e.currency, e.rateAtEntry || RATE);
+      dayTotal += krw;
+      const origText = e.currency === 'JPY' ? (Math.round(e.amount).toLocaleString('ko-KR') + ' 엔') : '';
+      itemsHtml += '<div class="expense-item">' +
+        '<div class="expense-main">' +
+          '<div class="expense-desc">' + (e.payMethod === 'cash' ? '💵' : '💳') + ' ' + e.desc + '</div>' +
+          '<span class="expense-cat">' + e.category + '</span>' +
+        '</div>' +
+        '<div class="expense-amt">' +
+          '<div class="krw">' + fmt(krw) + '원</div>' +
+          (origText ? '<div class="orig">' + origText + '</div>' : '') +
+          '<button class="del-btn" onclick="deleteExpense(\'' + e.id + '\')">삭제</button>' +
+        '</div>' +
+      '</div>';
+    });
+
+    const d = new Date(date + 'T00:00:00');
+    let dateLabel;
+    if(isPreTrip){
+      dateLabel = (d.getMonth()+1) + '/' + d.getDate() + ' (사전 결제)';
+    } else {
+      const wk = ['일','월','화','수','목','금','토'][d.getDay()];
+      dateLabel = (d.getMonth()+1) + '/' + d.getDate() + '(' + wk + ')';
+    }
+
+    return '<div class="date-group"><div class="card">' +
+      '<div class="date-head"><span>' + dateLabel + '</span><span class="d-total">' + fmt(dayTotal) + '원</span></div>' +
+      itemsHtml +
+    '</div></div>';
+  }
+
+  function renderList(){
+    const listEl = document.getElementById('expenseList');
+    if(EXPENSES.length === 0){
+      listEl.innerHTML = '<div class="card"><div class="empty-note">아직 등록된 경비가 없어요. "등록" 탭에서 첫 항목을 등록해보세요.</div></div>';
+      return;
+    }
+
+    const byDate = {};
+    EXPENSES.forEach(function(e){
+      if(!byDate[e.date]) byDate[e.date] = [];
+      byDate[e.date].push(e);
+    });
+    const dates = Object.keys(byDate).sort();
+    const preDates = dates.filter(function(d){ return d < TRIP_START; });
+    const tripDates = dates.filter(function(d){ return d >= TRIP_START; });
+
+    let html = '';
+    if(preDates.length > 0){
+      html += '<div class="sec-head" style="margin-top:0;"><span class="tag" style="border-color:var(--coral); color:var(--coral);">PRE-TRIP</span><h2 style="font-size:15px;">여행 전 사전 결제</h2></div>';
+      preDates.forEach(function(date){ html += buildDateCard(date, byDate[date], true); });
+    }
+    if(tripDates.length > 0){
+      if(preDates.length > 0){
+        html += '<div class="sec-head"><span class="tag">TRIP</span><h2 style="font-size:15px;">현지 사용 경비</h2></div>';
+      }
+      tripDates.forEach(function(date){ html += buildDateCard(date, byDate[date], false); });
+    }
+    listEl.innerHTML = html;
+  }
+
+  function renderTotal(){
+    const r = computeTotals();
+
+    // 전체 합계 카드
+    let jpyOrig = 0, cardSum = 0, cashSum = 0;
+    EXPENSES.forEach(function(e){
+      const krw = toKRW(e.amount, e.currency, e.rateAtEntry || RATE);
+      if(e.currency === 'JPY') jpyOrig += e.amount;
+      if(e.payMethod === 'cash'){ cashSum += krw; } else { cardSum += krw; }
+    });
+
+    let html = '';
+    html += '<div class="total-row"><div class="t-name">여행 전 사전 결제</div><div class="t-amt" style="color:var(--coral);">' + fmt(r.preTotal) + '원</div></div>';
+    html += '<div class="total-row"><div class="t-name">현지 사용 경비</div><div class="t-amt">' + fmt(r.tripTotal) + '원</div></div>';
+    html += '<div class="total-row grand"><div class="t-name">전체 합계</div><div class="t-amt">' + fmt(r.grand) + '원</div></div>';
+    html += '<div class="total-row sub"><div class="t-name">└ 1인 평균 (' + FAMILY_SIZE + '명)</div><div class="t-amt">' + fmt(r.grand / FAMILY_SIZE) + '원</div></div>';
+    document.getElementById('totalCard').innerHTML = html;
+
+    // 카테고리별 카드
+    const cats = Object.keys(r.byCategory).sort(function(a, b){ return r.byCategory[b] - r.byCategory[a]; });
+    let catHtml = '';
+    if(cats.length === 0){
+      catHtml = '<div class="empty-note">아직 등록된 경비가 없어요.</div>';
+    } else {
+      cats.forEach(function(c){
+        const pct = r.grand > 0 ? (r.byCategory[c] / r.grand * 100) : 0;
+        catHtml += '<div class="cat-row">' +
+          '<div class="cat-head"><span>' + c + '<span class="pct">' + pct.toFixed(0) + '%</span></span><span>' + fmt(r.byCategory[c]) + '원</span></div>' +
+          '<div class="bar-track"><div class="bar-fill" style="width:' + pct.toFixed(1) + '%;"></div></div>' +
+        '</div>';
+      });
+    }
+    document.getElementById('categoryCard').innerHTML = catHtml;
+
+    // 결제수단 · 통화 카드
+    let payHtml = '';
+    payHtml += '<div class="total-row"><div class="t-name">💳 카드</div><div class="t-amt">' + fmt(cardSum) + '원</div></div>';
+    payHtml += '<div class="total-row"><div class="t-name">💵 현금</div><div class="t-amt">' + fmt(cashSum) + '원</div></div>';
+    payHtml += '<div class="total-row sub"><div class="t-name">└ 엔화(JPY)로 결제한 금액</div><div class="t-amt">' + fmt(jpyOrig) + '엔</div></div>';
+    document.getElementById('payCard').innerHTML = payHtml;
+  }
+
+  function renderAll(){
+    renderSummary();
+    renderList();
+    renderTotal();
+  }
+
+  function syncToNotion(){
+    const btn = document.getElementById('notionSyncBtn');
+    const status = document.getElementById('notionSyncStatus');
+
+    if(!dataLoaded){
+      status.className = 'status-line err';
+      status.textContent = '⚠️ 아직 서버에서 경비 목록을 불러오지 못했어요. 인터넷 연결 확인 후 잠시 뒤 다시 눌러주세요. (빈 데이터로 노션을 덮어쓰지 않도록 막아둔 거예요)';
+      return;
+    }
+    if(EXPENSES.length === 0){
+      status.className = 'status-line err';
+      status.textContent = '⚠️ 등록된 경비가 없어서 동기화할 내용이 없어요.';
+      return;
+    }
+    if(savingCount > 0){
+      status.className = 'status-line err';
+      status.textContent = '⚠️ 방금 등록한 내용을 저장 중이에요. 잠시 뒤 다시 눌러주세요.';
+      return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = '동기화 중... (항목이 많으면 조금 걸려요)';
+    status.className = 'status-line';
+    status.textContent = '';
+
+    fetch('/api/osaka-notion-sync', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ expenses: EXPENSES, rate: RATE })
+    })
+    .then(function(r){ return r.json(); })
+    .then(function(data){
+      btn.disabled = false;
+      btn.textContent = '🔗 노션에 동기화';
+      if(data && data.success){
+        status.className = 'status-line ok';
+        status.textContent = '✅ ' + data.synced + '건 동기화 완료 (' + new Date().toLocaleTimeString('ko-KR') + ')';
+      } else {
+        status.className = 'status-line err';
+        const done = (data && typeof data.synced === 'number') ? ' (' + data.synced + '/' + data.total + '건 반영)' : '';
+        status.textContent = '⚠️ 동기화 실패: ' + ((data && data.error) ? data.error : '알 수 없는 오류') + done;
+      }
+    })
+    .catch(function(e){
+      btn.disabled = false;
+      btn.textContent = '🔗 노션에 동기화';
+      status.className = 'status-line err';
+      status.textContent = '⚠️ 동기화 실패: ' + e.message;
+    });
+  }
+
+  function saveRate(){
+    fetch('/api/osaka-state', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ key: 'osaka_exchange_rate', value: RATE })
+    }).catch(function(e){ console.error('save failed', e); });
+  }
+
+  function fetchData(){
+    const startedAt = Date.now();
+    Promise.all([
+      fetch('/api/osaka-state?key=osaka_expenses').then(function(r){ return r.json(); }),
+      fetch('/api/osaka-state?key=osaka_exchange_rate').then(function(r){ return r.json(); })
+    ]).then(function(results){
+      const a = results[0], b = results[1];
+      if(!a || a.success !== true){ throw new Error((a && a.error) ? a.error : '서버 응답 오류'); }
+      // 조회하는 사이에 이 기기에서 경비를 바꿨거나 저장 중이면, 방금 한 변경이 지워지지 않도록 이번 결과는 무시
+      if(savingCount > 0 || lastLocalChange > startedAt) return;
+      EXPENSES = Array.isArray(a.value) ? a.value : [];
+      RATE = (b && b.value) ? b.value : 890;
+      dataLoaded = true;
+      document.getElementById('inRate').value = RATE;
+      renderAll();
+      document.getElementById('updatedAt').textContent = '마지막 동기화: ' + new Date().toLocaleTimeString('ko-KR');
+    }).catch(function(e){
+      console.error('load failed', e);
+      document.getElementById('updatedAt').textContent = '⚠️ 서버 연결 실패 (' + e.message + ') — 인터넷/환경변수를 확인해 주세요.';
+      renderAll();
+    });
+  }
+
+  fetchData();
+  setInterval(fetchData, 15000);
+</script>
+
+</body>
+</html>

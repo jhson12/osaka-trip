@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>오사카 가족여행 · 2026.10.03-07</title>
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.css">
+<style>
+  :root{
+    --sky-deep:#C0543D;
+    --sky-mid:#E0906A;
+    --sky-light:#FBF2E7;
+    --sun:#D9A441;
+    --coral:#E0673F;
+    --navy:#4A2E22;
+    --navy-soft:#7A5646;
+    --card:#FFFFFF;
+    --card-sand:#F7E9D8;
+    --line:rgba(74,46,34,0.14);
+    --muted:#9C8170;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    font-family:'Pretendard Variable', 'Pretendard', 'Malgun Gothic', sans-serif;
+    background:var(--sky-light);
+    color:var(--navy);
+    -webkit-font-smoothing:antialiased;
+    padding-bottom:60px;
+  }
+  .display{font-family:'Pretendard Variable', 'Pretendard', 'Malgun Gothic', sans-serif;}
+  .mono{font-family:'Pretendard Variable','Pretendard',sans-serif;}
+
+  .hero{
+    position:relative;
+    padding:56px 24px 44px;
+    overflow:hidden;
+    background:linear-gradient(180deg, var(--sky-deep) 0%, var(--sky-mid) 100%);
+  }
+  .hero-eyebrow{
+    font-family:'Pretendard Variable','Pretendard',sans-serif;
+    font-size:12px;
+    letter-spacing:.18em;
+    color:rgba(255,255,255,0.85);
+    text-transform:uppercase;
+    margin-bottom:14px;
+  }
+  .hero h1{
+    font-size:38px;
+    font-weight:600;
+    line-height:1.15;
+    color:#FFFFFF;
+    margin-bottom:6px;
+  }
+  .hero h1 span{color:var(--sun); font-style:italic;}
+  .hero-dates{
+    font-family:'Pretendard Variable','Pretendard',sans-serif;
+    font-size:15px;
+    color:rgba(255,255,255,0.9);
+    margin-bottom:26px;
+  }
+  .dday-badge{
+    display:inline-flex;
+    align-items:baseline;
+    gap:8px;
+    background:rgba(255,255,255,0.18);
+    border:1px solid rgba(255,255,255,0.5);
+    padding:10px 16px;
+    border-radius:100px;
+  }
+  .dday-badge .num{font-family:'Pretendard Variable','Pretendard',sans-serif; font-size:20px; font-weight:600; color:#FFFFFF;}
+  .dday-badge .label{font-size:12px; color:rgba(255,255,255,0.85);}
+  .wave{
+    position:absolute; left:0; right:0; bottom:-1px; height:36px;
+    background:
+      radial-gradient(circle at 10px -6px, transparent 12px, var(--sky-light) 13px) 0 0/40px 40px repeat-x;
+  }
+
+  .snapshot{
+    display:flex;
+    background:var(--card);
+    border-bottom:1px solid var(--line);
+  }
+  .snap-item{
+    flex:1;
+    padding:18px 16px;
+    text-align:center;
+    border-right:1px solid var(--line);
+  }
+  .snap-item:last-child{border-right:none;}
+  .snap-item .val{font-family:'Pretendard Variable','Pretendard',sans-serif; font-size:17px; font-weight:600; color:var(--navy);}
+  .snap-item .lab{font-size:11px; color:var(--muted); margin-top:4px; letter-spacing:.05em;}
+
+  section{padding:40px 20px 8px;}
+  .sec-head{display:flex; align-items:baseline; gap:10px; margin-bottom:20px; flex-wrap:wrap;}
+  .sec-head .tag{font-family:'Pretendard Variable','Pretendard',sans-serif; font-size:11px; color:var(--sky-deep); border:1px solid var(--sky-deep); padding:2px 8px; border-radius:4px;}
+  .sec-head h2{font-family:'Pretendard Variable','Pretendard',sans-serif; font-size:22px; font-weight:600; color:var(--navy);}
+
+  .day-card{
+    position:relative;
+    display:flex;
+    background:var(--card);
+    color:var(--navy);
+    border-radius:14px;
+    margin-bottom:16px;
+    overflow:hidden;
+    box-shadow:0 6px 18px rgba(18,60,94,0.12);
+    border:1px solid var(--line);
+  }
+  .day-stub{
+    width:84px;
+    flex-shrink:0;
+    background:linear-gradient(180deg, var(--sky-deep), var(--sky-mid));
+    color:#FFFFFF;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    padding:14px 6px;
+    border-right:2px dashed rgba(255,255,255,0.5);
+    position:relative;
+  }
+  .day-stub .wk{font-size:15px; font-weight:700; color:#FFFFFF; margin-top:6px;}
+  .day-stub .date{font-family:'Pretendard Variable','Pretendard',sans-serif; font-size:15px; font-weight:700; color:#FFFFFF;}
+  .day-body{padding:16px 18px; flex:1;}
+  .day-body .day-title{font-family:'Pretendard Variable','Pretendard',sans-serif; font-weight:600; font-size:16px; margin-bottom:6px; color:var(--navy);}
+  .day-body .day-tbd{
+    font-size:13px;
+    color:#8a6a3a;
+    border:1.5px dashed #E8C78E;
+    border-radius:8px;
+    padding:8px 10px;
+    background:var(--card-sand);
+  }
+  .day-note{font-size:12px; color:var(--muted); margin-top:4px; margin-bottom:20px; padding-left:4px;}
+
+  .info-card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:18px;
+    margin-bottom:16px;
+    box-shadow:0 4px 14px rgba(18,60,94,0.08);
+  }
+  .info-card .info-title{
+    font-family:'Pretendard Variable','Pretendard',sans-serif;
+    font-size:13px;
+    color:var(--sky-deep);
+    margin-bottom:10px;
+    display:flex;
+    justify-content:space-between;
+  }
+  .tbd-box{
+    border:1.5px dashed rgba(224,103,63,0.55);
+    border-radius:10px;
+    padding:14px;
+    font-size:13px;
+    color:var(--navy-soft);
+    background:rgba(224,103,63,0.07);
+  }
+  .tbd-box b{color:var(--coral);}
+
+  .checklist{list-style:none;}
+  .checklist li{
+    display:flex; align-items:center; gap:12px;
+    padding:12px 4px;
+    border-bottom:1px solid var(--line);
+    font-size:14px;
+    color:var(--navy);
+  }
+  .checklist li:last-child{border-bottom:none;}
+  .checklist input{
+    width:18px; height:18px; accent-color:var(--coral); flex-shrink:0;
+  }
+  .checklist li.checked span{ text-decoration:line-through; color:var(--muted);}
+
+  footer{
+    text-align:center;
+    padding:36px 20px 10px;
+    font-family:'Pretendard Variable','Pretendard',sans-serif;
+    font-size:11px;
+    color:var(--muted);
+  }
+  footer .upd{margin-top:4px; color:rgba(107,147,172,0.7);}
+
+  .contingency-btn{
+    font-family:'Pretendard Variable','Pretendard',sans-serif;
+    font-size:11px;
+    font-weight:600;
+    color:var(--coral);
+    background:rgba(224,103,63,0.1);
+    border:1px solid rgba(224,103,63,0.4);
+    border-radius:100px;
+    padding:2px 9px;
+    cursor:pointer;
+    white-space:nowrap;
+  }
+  .contingency-btn:hover{ background:rgba(224,103,63,0.2); }
+  .item-skipped{ text-decoration:line-through; opacity:0.45; }
+  .alt-item{ transition:opacity .2s ease; }
+  .alt-item.pending{ opacity:0.4; }
+  .alt-item.active{ opacity:1; }
+  .alt-tag{
+    font-size:10px; font-weight:700; color:var(--coral);
+    border:1px solid var(--coral); border-radius:4px; padding:0 5px; margin-left:6px;
+  }
+
+  .edit-icon{
+    display:none;
+    border:none;
+    background:rgba(192,84,61,0.12);
+    color:var(--sky-deep);
+    font-size:12px;
+    width:22px; height:22px;
+    border-radius:50%;
+    cursor:pointer;
+    margin-left:6px;
+    line-height:1;
+    flex-shrink:0;
+  }
+  body.edit-mode .edit-icon{ display:inline-flex; align-items:center; justify-content:center; }
+
+  .edit-mode-toggle{
+    font-family:'Pretendard Variable','Pretendard',sans-serif;
+    font-size:12px; font-weight:600;
+    color:var(--sky-deep);
+    background:rgba(192,84,61,0.1);
+    border:1px solid rgba(192,84,61,0.4);
+    border-radius:100px;
+    padding:5px 12px;
+    cursor:pointer;
+    margin-left:auto;
+  }
+  body.edit-mode .edit-mode-toggle{ background:var(--sky-deep); color:#fff; }
+  .add-item-btn{ margin-left:0 !important; }
+  body.edit-mode .add-item-btn{ display:inline-block !important; background:rgba(192,84,61,0.1); color:var(--sky-deep); }
+
+  #reschedule-panel{
+    display:none;
+    position:fixed;
+    left:12px; right:12px; bottom:12px;
+    max-width:460px;
+    margin:0 auto;
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:16px;
+    box-shadow:0 10px 34px rgba(18,60,94,0.28);
+    z-index:80;
+  }
+  #reschedule-panel .rp-label{font-size:11px; color:var(--muted); margin-bottom:4px;}
+  #reschedule-panel .rp-title{font-weight:700; font-size:15px; margin-bottom:12px;}
+  #reschedule-panel select, #reschedule-panel input{
+    font-size:13px; padding:6px 8px; border-radius:6px; border:1px solid var(--line);
+  }
+
+  .choice-option{
+    display:flex;
+    align-items:center;
+    width:100%;
+    box-sizing:border-box;
+    padding:6px 10px;
+    border-radius:8px;
+    border:1.5px dashed var(--line);
+    cursor:pointer;
+    font-size:13px;
+    line-height:1.3;
+    transition:all .15s ease;
+  }
+  .choice-option .choice-check{ font-size:11px; color:var(--sky-deep); font-weight:700; display:inline-block; width:12px; margin-right:3px; opacity:0; flex-shrink:0; }
+  .choice-option .choice-label{ flex:1; min-width:0; }
+  .choice-option.selected{
+    border-style:solid;
+    border-color:var(--sky-deep);
+    background:rgba(192,84,61,0.08);
+    font-weight:700;
+  }
+  .choice-option.selected .choice-check{ opacity:1; }
+  .choice-option.unselected{
+    opacity:0.45;
+    text-decoration:line-through;
+  }
+</style>
+</head>
+<body>
+
+  <div class="hero">
+    <div class="hero-eyebrow">FAMILY TRIP · JAPAN</div>
+    <h1>오사카 <span>가족여행</span></h1>
+    <div class="hero-dates">2026.10.03 (토) — 10.07 (수)</div>
+    <div class="dday-badge">
+      <span class="num" id="ddayNum">D-1</span>
+      <span class="label">출발까지</span>
+    </div>
+    <div class="wave"></div>
+  </div>
+
+  <div class="snapshot">
+    <div class="snap-item">
+      <div class="val">4박 5일</div>
+      <div class="lab">TRIP LENGTH</div>
+    </div>
+    <div class="snap-item">
+      <div class="val">엄마·아빠·윤우</div>
+      <div class="lab">인원 (3명)</div>
+    </div>
+  </div>
+
+  <section>
+    <div class="sec-head">
+      <span class="tag">FLIGHT</span>
+      <h2>항공편 정보</h2>
+    </div>
+    <div class="info-card">
+      <div class="info-title">제주항공 (Jeju Air) <span>BH6I5H · P7UFTL</span></div>
+      <div style="display:flex; flex-direction:column; gap:14px;">
+        <div style="display:flex; align-items:center; gap:14px;">
+          <div style="background:var(--sky-deep); color:#fff; font-size:11px; font-weight:600; padding:3px 10px; border-radius:6px;">가는 편</div>
+          <div style="flex:1;">
+            <div style="font-weight:700; font-size:15px;">서울/인천 ICN <span style="color:var(--muted); font-weight:500;">→</span> 오사카/간사이 KIX</div>
+            <div style="font-size:13px; color:var(--navy-soft); margin-top:2px;">7C1307 · 2026.10.03(토) 17:00 출발 → 18:55 도착</div>
+          </div>
+        </div>
+        <div style="display:flex; align-items:center; gap:14px;">
+          <div style="background:var(--sky-deep); color:#fff; font-size:11px; font-weight:600; padding:3px 10px; border-radius:6px;">오는 편</div>
+          <div style="flex:1;">
+            <div style="font-weight:700; font-size:15px;">오사카/간사이 KIX <span style="color:var(--muted); font-weight:500;">→</span> 서울/인천 ICN</div>
+            <div style="font-size:13px; color:var(--navy-soft); margin-top:2px;">7C1306 · 2026.10.07(수) 13:35 출발 → 15:35 도착</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <span class="tag">STAY</span>
+      <h2>숙소 정보</h2>
+    </div>
+    <div class="info-card">
+      <div style="font-size:13px; margin-bottom:10px;"><b style="color:var(--sky-deep);">10.03-10.04</b> — <a href="https://www.google.com/maps/search/?api=1&query=1-20-6+Nipponbashi+Chuo-ku+Osaka+542-0073+The+OneFive+Osaka+Namba+Kuromon" target="_blank" style="color:var(--navy); text-decoration:underline;">The OneFive Osaka Namba Kuromon</a></div>
+      <div style="font-size:13px;"><b style="color:var(--sky-deep);">10.04-10.07</b> — <a href="https://www.google.com/maps/search/?api=1&query=Nipponbashi+1-4-18+Chuo-ku+Osaka+542-0073+Onyado+Nono+Namba+Natural+Hot+Spring" target="_blank" style="color:var(--navy); text-decoration:underline;">Onyado Nono Namba Natural Hot Spring</a></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <span class="tag">SCHEDULE</span>
+      <h2>일자별 일정</h2>
+      <button class="edit-mode-toggle" id="editModeToggle" onclick="toggleEditMode()">✏️ 일정 편집</button>
+      <button class="edit-mode-toggle add-item-btn" id="addItemBtn" onclick="openAddForm()" style="display:none;">➕ 일정 추가</button>
+    </div>
+
+    <div class="day-card">
+      <div class="day-stub"><div class="date">10.03</div><div class="wk">토</div></div>
+      <div class="day-body">
+        <div class="day-title">여행 1일차</div>
+        <div id="moved-in-10-03"></div>
+        <div style="display:flex; flex-direction:column; gap:8px;">
+          <div data-item-id="d1_1" style="display:grid; grid-template-columns:80px 1fr; gap:16px; font-size:13px;"><b style="color:var(--sky-deep);">12:00-13:30</b><span>인천공항 1터미널 이동</span><button class="edit-icon" onclick="openEditForm('d1_1', this)">📅</button></div>
+          <div data-item-id="d1_2" style="display:grid; grid-template-columns:80px 1fr; gap:16px; font-size:13px;"><b style="color:var(--sky-deep);">13:30-14:00</b><span>체크인</span><button class="edit-icon" onclick="openEditForm('d1_2', this)">📅</button></div>
+          <div data-item-id="d1_3" style="display:grid; grid-template-columns:80px 1fr; gap:16px; font-size:13px;"><b style="color:var(--sky-deep);">14:00-17:00</b><span>공항 라운지 및 면세 쇼핑</span><button class="edit-icon" onclick="openEditForm('d1_3', this)">📅</button></div>
+          <div data-item-id="d1_4" style="display:grid; grid-template-columns:80px 1fr; gap:16px; font-size:13px;"><b style="color:var(--sky-deep);">17:00-18:55</b><span>인천 → 오사카 이동 (7C1307)</span><button class="edit-icon" onclick="openEditForm('d1_4', this)">📅</button></div>
+          <div data-item-id="d1_5" style="display:grid; grid-template-columns:80px 1fr; gap:16px; font-size:13px;"><b style="color:var(--sky-deep);">18:55-20:00</b><span>오사카 시내 이동</span><button class="edit-icon" onclick="openEditForm('d1_5', this)">📅</button></div>
+          <div data-item-id="d1_6" style="display:grid; grid-template-columns:80px 1fr; gap:16px; font-size:13px;"><b style="color:var(--sky-deep);">20:00-20:30</b><span>호텔 체크인</span><button class="edit-icon" onclick="openEditForm('d1_6', this)">📅</button></div>
+          <div data-item-id="d1_7" style="display:grid; grid-template-columns:80px 1fr; gap:16px; font-size:13px;"><b style="color:var(--sky-deep);">20:30-22:00</b><span>저녁 겸 야식 (<a href="https://maps.app.goo.gl/zs3T5oKXem6jjDhs9" target="_blank" style="color:var(--sky-deep); text-decoration:underline;">쿠시카츠 다루마</a>)</span><button class="edit-icon" onclick="openEditForm('d1_7', this)">📅</button></div>
+          <div data-item-id="d1_8" style="display:grid; grid-template-columns:80px 1fr; gap:16px; font-size:13px;"><b style="color:var(--sky-deep);">22:00-</b><span>휴식 및 취침</span><button class="edit-icon" onclick="openEditForm('d1_8', this)">📅</button></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="day-card">
+      <div class="day-stub"><div class="date">10.04</div><div class="wk">일</div></div>
+      <div class="day-body">
+        <div class="day-title">여행 2일차</div>
+        <div id="moved-in-10-04"></div>
+        <div style="display:flex; flex-direction:column; gap:8px;">
+          <div data-item-id="d2_2" style="display:grid; grid-template-columns:80px 1fr; gap:16px; font-size:13px;"><b style="color:var(--sky-deep);">9:30-10:00</b><span>체크아웃 및 짐 보관</span><button class="edit-icon" onclick="openEditForm('d2_2', this)">📅</button></div>
+          <div data-item-id="d2_3" style="display:grid; grid-template-columns:80px 1fr; gap:16px; font-size:13px;"><b style="color:var(--sky-deep);">10:00-11:00</b><span>고베 이동</span><button class="edit-icon" onclick="openEditForm('d2_3', this)">📅</button></div>
+          <div data-item-id="d2_4" style="display:grid; grid-template-columns:80px 1fr; gap:16px; font-size:13px;"><b style="color:var(--sky-deep);">11:30-12:30</b><span>고베 스테이크 랜드 (<a href="https://maps.app.goo.gl/7UcbRAfesmdwVt9W9" target="_blank" style="color:var(--sky-deep); text-decoration:underline;">지도</a>)</span><button class="edit-icon" onclick="openEditForm('d2_4', this)">📅</button></div>
+          <div data-item-id="d2_3d" style="display:grid; grid-template-columns:80px 1fr; gap:16px; font-size:13px;"><b style="color:var(--sky-deep);">12:30-13:00</b><span>기타노 이진칸으로 이동</span><button class="edit-icon" onclick="openEditForm('d2_3d', this)">📅</button></div>
+          <div data-item-id="d2_3c" style="display:grid; grid-template-columns:80px 1fr; gap:16px; font-size:13px;"><b style="color:var(--sky-deep);">13:00-14:30</b><span>기타노 이진칸(이진칸 거리) 산책</span><button class="edit-icon" onclick="openEditForm('d2_3c', this)">📅</button></div>
+          <div data-item-id="d2_3e" style="display:grid; grid-template-columns:80px 1fr; gap:16px; font-size:13px;"><b style="color:var(--sky-deep);">14:30-15:00</b><span>하버랜드로 이동</span><button class="edit-icon" onclick="openEditForm('d2_3e', this)">📅</button></div>
+          <div data-item-id="d2_5" style="display:grid; grid-template-columns:80px 1fr; gap:16px; font-size:13px;"><b style="color:var(--sky-deep);">15:00-16:30</b><span>고베 하버랜드 · 메리켄파크</span><button class="edit-icon" onclick="openEditForm('d2_5', this)">📅</button></div>
+          <div data-item-id="d2_7" style="display:grid; grid-template-columns:80px 1fr; gap:16px; font-size:13px;"><b style="color:var(--sky-deep);">16:30-17:30</b><span>고베 → 오사카 이동</span><button class="edit-icon" onclick="openEditForm('d2_7', this)">📅</button></div>
+          <div data-item-id="d2_8" style="display:grid; grid-template-columns:80px 1fr; gap:16px; font-size:13px;"><b style="color:var(--sky-deep);">17:30-19:00</b><span>저녁식사</span><button class="edit-icon" onclick="openEditForm('d2_8', this)">📅</button></div>
+          <div data-item-id="d2_9" style="display:grid; grid-template-columns:80px 1fr; gap:16px; font-size:13px;"><b style="color:var(--sky-deep);">19:00</b><span>휴식 및 취침</span><button class="edit-icon" onclick="openEditForm('d2_9', this)">📅</button></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="day-card">
+      <div class="day-stub"><div class="date">10.05</div><div class="wk">월</div></div>
+      <div class="day-body">
+        <div class="day-title">여행 3일차</div>
+        <div id="moved-in-10-05"></div>
+        <div style="display:flex; flex-direction:column; gap:8px;">
+          <div data-item-id="d3_0" style="display:grid; grid-template-columns:80px 1fr; gap:16px; font-size:13px;"><b style="color:var(--sky-deep);">8:00</b><span>오사카 숙소 출발 (우지로 이동)</span><button class="edit-icon" onclick="openEditForm('d3_0', this)">📅</button></div>
+          <div data-item-id="d3_1" style="display:grid; grid-template-columns:80px 1fr; gap:16px; font-size:13px;"><b style="color:var(--sky-deep);">9:40-10:00</b><span>우지 도착 · 닌텐도 뮤지엄 이동</span><button class="edit-icon" onclick="openEditForm('d3_1', this)">📅</button></div>
+          <div style="display:grid; grid-template-columns:80px 1fr; gap:16px; font-size:13px;"><b style="color:var(--sky-deep);">10:00-12:00</b><div style="display:flex; flex-direction:column; gap:6px;">
+            <div class="choice-option" id="choice-d3uji-A" onclick="selectChoice('d3uji','A')"><span class="choice-check">✓</span><span class="choice-label">닌텐도 뮤지엄 (취소표 확보 시, <a href="https://www.google.com/maps/search/?api=1&query=56+Kaguraden+Ogura-cho+Uji-shi+Kyoto+611-0042" target="_blank" style="color:var(--sky-deep); text-decoration:underline;" onclick="event.stopPropagation();">지도</a>)</span></div>
+            <div class="choice-option" id="choice-d3uji-B" onclick="selectChoice('d3uji','B')"><span class="choice-check">✓</span><span class="choice-label">뵤도인 · 말차거리 (표 못 구했을 때, <a href="https://www.google.com/maps/search/?api=1&query=Byodoin+Temple+Uji" target="_blank" style="color:var(--sky-deep); text-decoration:underline;" onclick="event.stopPropagation();">지도</a>)</span></div>
+          </div></div>
+          <div data-item-id="d3_1b" style="display:grid; grid-template-columns:80px 1fr; gap:16px; font-size:13px;"><b style="color:var(--sky-deep);">12:00-12:40</b><span>점심식사 (우지 말차거리)</span><button class="edit-icon" onclick="openEditForm('d3_1b', this)">📅</button></div>
+          <div data-item-id="d3_1c" style="display:grid; grid-template-columns:80px 1fr; gap:16px; font-size:13px;"><b style="color:var(--sky-deep);">12:40-13:30</b><span>우지 → 교토역 이동</span><button class="edit-icon" onclick="openEditForm('d3_1c', this)">📅</button></div>
+          <div data-item-id="d3_1d" style="display:grid; grid-template-columns:80px 1fr; gap:16px; font-size:13px;"><b style="color:var(--sky-deep);">13:30-15:00</b><span>교토철도박물관 (<a href="https://www.google.com/maps/search/?api=1&query=Kyoto+Railway+Museum" target="_blank" style="color:var(--sky-deep); text-decoration:underline;">지도</a>)</span><button class="edit-icon" onclick="openEditForm('d3_1d', this)">📅</button></div>
+          <div data-item-id="d3_1e" style="display:grid; grid-template-columns:80px 1fr; gap:16px; font-size:13px;"><b style="color:var(--sky-deep);">15:00-15:30</b><span>교토역 → 청수사 이동</span><button class="edit-icon" onclick="openEditForm('d3_1e', this)">📅</button></div>
+          <div data-item-id="d3_1f" style="display:grid; grid-template-columns:80px 1fr; gap:16px; font-size:13px;"><b style="color:var(--sky-deep);">15:30-17:00</b><span>청수사 · 산넨자카·니넨자카 (<a href="https://www.google.com/maps/search/?api=1&query=Kiyomizu-dera+Kyoto" target="_blank" style="color:var(--sky-deep); text-decoration:underline;">지도</a>)</span><button class="edit-icon" onclick="openEditForm('d3_1f', this)">📅</button></div>
+          <div data-item-id="d3_1g" style="display:grid; grid-template-columns:80px 1fr; gap:16px; font-size:13px;"><b style="color:var(--sky-deep);">17:00-18:00</b><span>청수사 → 오사카 복귀 이동</span><button class="edit-icon" onclick="openEditForm('d3_1g', this)">📅</button></div>
+          <div data-item-id="d3_2" style="display:grid; grid-template-columns:80px 1fr; gap:16px; font-size:13px;"><b style="color:var(--sky-deep);">19:30-20:30</b><span>저녁식사</span><button class="edit-icon" onclick="openEditForm('d3_2', this)">📅</button></div>
+          <div data-item-id="d3_3" style="display:grid; grid-template-columns:80px 1fr; gap:16px; font-size:13px;"><b style="color:var(--sky-deep);">20:30</b><span>휴식 및 취침</span><button class="edit-icon" onclick="openEditForm('d3_3', this)">📅</button></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="day-card">
+      <div class="day-stub"><div class="date">10.06</div><div class="wk">화</div></div>
+      <div class="day-body">
+        <div class="day-title">여행 4일차</div>
+        <div id="moved-in-10-06"></div>
+        <div class="day-tbd">일정 미정 (추후 업데이트)</div>
+      </div>
+    </div>
+
+    <div class="day-card">
+      <div class="day-stub"><div class="date">10.07</div><div class="wk">수</div></div>
+      <div class="day-body">
+        <div class="day-title">여행 5일차</div>
+        <div id="moved-in-10-07"></div>
+        <div style="display:flex; flex-direction:column; gap:8px;">
+          <div data-item-id="d5_2" style="display:grid; grid-template-columns:80px 1fr; gap:16px; font-size:13px;"><b style="color:var(--sky-deep);">9:00-10:00</b><span>체크아웃</span><button class="edit-icon" onclick="openEditForm('d5_2', this)">📅</button></div>
+          <div data-item-id="d5_3" style="display:grid; grid-template-columns:80px 1fr; gap:16px; font-size:13px;"><b style="color:var(--sky-deep);">10:00-11:00</b><span>아침 겸 점심</span><button class="edit-icon" onclick="openEditForm('d5_3', this)">📅</button></div>
+          <div data-item-id="d5_4" style="display:grid; grid-template-columns:80px 1fr; gap:16px; font-size:13px;"><b style="color:var(--sky-deep);">11:00-12:00</b><span>간사이공항(KIX) 이동</span><button class="edit-icon" onclick="openEditForm('d5_4', this)">📅</button></div>
+          <div data-item-id="d5_5" style="display:grid; grid-template-columns:80px 1fr; gap:16px; font-size:13px;"><b style="color:var(--sky-deep);">12:00-13:35</b><span>탑승수속 및 출국</span><button class="edit-icon" onclick="openEditForm('d5_5', this)">📅</button></div>
+          <div data-item-id="d5_6" style="display:grid; grid-template-columns:80px 1fr; gap:16px; font-size:13px;"><b style="color:var(--sky-deep);">13:35-15:35</b><span>오사카 → 인천 이동 (7C1306)</span><button class="edit-icon" onclick="openEditForm('d5_6', this)">📅</button></div>
+        </div>
+      </div>
+    </div>
+    <div class="day-note">※ 각 일자 카드는 확정되는 대로 채워 넣을 예정입니다.</div>
+  </section>
+
+  <footer>
+    FAMILY TRIP · OSAKA, JAPAN
+    <div class="upd" id="updatedAt"></div>
+  </footer>
+
+  <div id="reschedule-panel">
+    <div class="rp-label" id="rp-mode-label">일정 변경</div>
+    <div class="rp-title" id="rp-item-label"></div>
+    <div class="field" id="rp-text-field" style="margin-bottom:10px;">
+      <label id="rp-text-hint">이름 바꾸기 (링크는 사라져요. 비워두면 이름은 그대로)</label>
+      <input id="rp-text-input" type="text" placeholder="예: 저녁식사 - 새 식당 이름">
+    </div>
+    <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-bottom:12px;">
+      <select id="rp-date-select">
+        <option value="10-03">10/3 (토)</option>
+        <option value="10-04">10/4 (일)</option>
+        <option value="10-05">10/5 (월)</option>
+        <option value="10-06">10/6 (화)</option>
+        <option value="10-07">10/7 (수)</option>
+      </select>
+      <input id="rp-time-input" type="text" placeholder="예: 20:00" style="width:90px;">
+    </div>
+    <div style="display:flex; gap:8px; flex-wrap:wrap;">
+      <button class="contingency-btn" id="rp-save-btn" onclick="saveReschedule()">이 날짜·시간으로 이동</button>
+      <button class="contingency-btn" id="rp-rename-btn" style="background:rgba(30,155,215,0.12);" onclick="renameItem()">이름만 바꾸기</button>
+      <button class="contingency-btn" id="rp-cancel-item-btn" style="background:rgba(224,103,63,0.15);" onclick="cancelItem()">이 일정 취소</button>
+      <button class="contingency-btn" style="color:var(--navy-soft); border-color:var(--line); background:transparent;" onclick="closeReschedulePanel()">닫기</button>
+    </div>
+  </div>
+
+<script>
+  const tripStart = new Date('2026-10-03T00:00:00+09:00');
+  const now = new Date();
+  const diff = Math.ceil((tripStart - now) / (1000*60*60*24));
+  document.getElementById('ddayNum').textContent = diff > 0 ? ('D-' + diff) : (diff === 0 ? 'D-DAY' : 'D+' + Math.abs(diff));
+
+  document.getElementById('updatedAt').textContent =
+    '마지막 업데이트: ' + new Date().toLocaleDateString('ko-KR', {year:'numeric', month:'long', day:'numeric'});
+
+
+  const DAY_LABELS = {
+    '10-03': '10/3(토)', '10-04': '10/4(일)', '10-05': '10/5(월)',
+    '10-06': '10/6(화)', '10-07': '10/7(수)'
+  };
+
+  let RESCHEDULES = {};
+  let CHOICES = {};
+  let editingItemId = null;
+  let lastChoiceChange = 0;
+
+  function selectChoice(groupId, option){
+    CHOICES[groupId] = option;
+    lastChoiceChange = Date.now();
+    fetch('/api/osaka-state', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ key: 'trip_choices', value: CHOICES })
+    }).catch(function(e){ console.error('sync save failed', e); });
+    renderChoices();
+  }
+
+  function renderChoices(){
+    document.querySelectorAll('[id^="choice-"]').forEach(function(el){
+      el.classList.remove('selected', 'unselected');
+    });
+    Object.keys(CHOICES).forEach(function(groupId){
+      const chosen = CHOICES[groupId];
+      if(!chosen) return;
+      const chosenEl = document.getElementById('choice-' + groupId + '-' + chosen);
+      if(chosenEl) chosenEl.classList.add('selected');
+      document.querySelectorAll('[id^="choice-' + groupId + '-"]').forEach(function(el){
+        if(el !== chosenEl) el.classList.add('unselected');
+      });
+    });
+  }
+
+  function fetchChoices(){
+    const requestStartedAt = Date.now();
+    fetch('/api/osaka-state?key=trip_choices')
+      .then(function(r){ return r.json(); })
+      .then(function(data){
+        // 이 요청이 시작된 이후에 사용자가 직접 선택을 바꿨다면, 그 로컬 변경이 우선하도록 서버 응답을 무시
+        if(lastChoiceChange > requestStartedAt) return;
+        CHOICES = (data && data.value) ? data.value : {};
+        renderChoices();
+      })
+      .catch(function(e){ console.error('sync load failed', e); });
+  }
+
+  fetchChoices();
+  setInterval(fetchChoices, 20000);
+
+
+  function toggleEditMode(){
+    document.body.classList.toggle('edit-mode');
+  }
+
+  function parseHour(text){
+    const m = text.match(/(\d{1,2})/);
+    return m ? parseInt(m[1], 10) : null;
+  }
+
+  function getDayScheduleContainer(dateId){
+    const placeholder = document.getElementById('moved-in-' + dateId);
+    if(!placeholder) return null;
+    const sib = placeholder.nextElementSibling;
+    // 일정이 아직 없는 날("일정 미정")은 이동해온 일정을 placeholder 안에 바로 표시
+    if(!sib || sib.classList.contains('day-tbd')) return placeholder;
+    return sib;
+  }
+
+  function getItemRow(itemId){
+    return document.querySelector('[data-item-id="' + itemId + '"]');
+  }
+
+  function getItemLabel(row){
+    // <b>시간</b> 다음에 오는 내용(span 또는 div)의 텍스트, 편집 아이콘·상태 배지 제외하고 추출
+    const clone = row.cloneNode(true);
+    const btn = clone.querySelector('.edit-icon');
+    if(btn) btn.remove();
+    const tag = clone.querySelector('.alt-tag');
+    if(tag) tag.remove();
+    const b = clone.querySelector('b');
+    if(b) b.remove();
+    return clone.textContent.trim();
+  }
+
+  function insertBannerInOrder(container, banner, timeStr){
+    const targetHour = parseHour(timeStr);
+    if(!container){ return; }
+    if(targetHour === null){ container.appendChild(banner); return; }
+    const rows = container.querySelectorAll(':scope > div[data-item-id], :scope > div.moved-banner');
+    for(const row of rows){
+      const b = row.querySelector('b');
+      if(!b) continue;
+      const h = parseHour(b.textContent);
+      if(h !== null && h > targetHour){
+        container.insertBefore(banner, row);
+        return;
+      }
+    }
+    container.appendChild(banner);
+  }
+
+  // dateId, timeStr 슬롯에 현재 "정상(normal)" 상태로 있는 다른 항목을 찾음 (충돌 감지용)
+  function findNormalOccupant(dateId, timeStr, excludeItemId){
+    const container = getDayScheduleContainer(dateId);
+    if(!container) return null;
+    const targetHour = parseHour(timeStr);
+    if(targetHour === null) return null;
+    const rows = container.querySelectorAll(':scope > div[data-item-id]');
+    for(const row of rows){
+      const id = row.getAttribute('data-item-id');
+      if(id === excludeItemId) continue;
+      const state = RESCHEDULES[id];
+      if(state && state.status && state.status !== 'normal') continue; // 이미 취소/이동된 항목은 제외
+      const b = row.querySelector('b');
+      if(!b) continue;
+      if(parseHour(b.textContent) === targetHour) return row;
+    }
+    return null;
+  }
+
+  let lastRescheduleChange = 0;
+
+  function saveAllReschedules(){
+    lastRescheduleChange = Date.now();
+    fetch('/api/osaka-state', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ key: 'all_reschedules', value: RESCHEDULES })
+    }).catch(function(e){ console.error('sync save failed', e); });
+  }
+
+  let isAddMode = false;
+
+  function openEditForm(itemId, btnEl){
+    isAddMode = false;
+    editingItemId = itemId;
+    const row = getItemRow(itemId);
+    const label = row ? getItemLabel(row) : '';
+    document.getElementById('rp-mode-label').textContent = '일정 변경';
+    document.getElementById('rp-item-label').textContent = label;
+    document.getElementById('rp-text-hint').textContent = '이름 바꾸기 (링크는 사라져요. 비워두면 이름은 그대로)';
+    document.getElementById('rp-text-input').value = '';
+    document.getElementById('rp-text-input').placeholder = '예: 저녁식사 - 새 식당 이름';
+    document.getElementById('rp-date-select').value = '10-03';
+    document.getElementById('rp-time-input').value = '';
+    document.getElementById('rp-save-btn').textContent = '이 날짜·시간으로 이동';
+    document.getElementById('rp-rename-btn').style.display = 'inline-block';
+    document.getElementById('rp-cancel-item-btn').style.display = 'inline-block';
+    document.getElementById('reschedule-panel').style.display = 'block';
+  }
+
+  function openAddForm(){
+    isAddMode = true;
+    editingItemId = null;
+    document.getElementById('rp-mode-label').textContent = '새 일정 추가';
+    document.getElementById('rp-item-label').textContent = '';
+    document.getElementById('rp-text-hint').textContent = '일정 이름 (필수)';
+    document.getElementById('rp-text-input').value = '';
+    document.getElementById('rp-text-input').placeholder = '예: 편의점 들르기';
+    document.getElementById('rp-date-select').value = '10-03';
+    document.getElementById('rp-time-input').value = '';
+    document.getElementById('rp-save-btn').textContent = '추가하기';
+    document.getElementById('rp-rename-btn').style.display = 'none';
+    document.getElementById('rp-cancel-item-btn').style.display = 'none';
+    document.getElementById('reschedule-panel').style.display = 'block';
+  }
+
+  function closeReschedulePanel(){
+    document.getElementById('reschedule-panel').style.display = 'none';
+    document.getElementById('rp-item-label').textContent = '';
+    editingItemId = null;
+    isAddMode = false;
+  }
+
+  function saveReschedule(){
+    const date = document.getElementById('rp-date-select').value;
+    const time = document.getElementById('rp-time-input').value.trim() || '시간 미정';
+
+    if(isAddMode){
+      const text = document.getElementById('rp-text-input').value.trim();
+      if(!text){ alert('일정 이름을 입력해주세요.'); return; }
+      const newId = 'custom_' + Date.now() + '_' + Math.floor(Math.random()*1000);
+      RESCHEDULES[newId] = { status: 'moved', date: date, time: time, label: text };
+      saveAllReschedules();
+      closeReschedulePanel();
+      renderAll();
+      return;
+    }
+
+    if(!editingItemId) return;
+    const row = getItemRow(editingItemId);
+    const label = row ? getItemLabel(row) : '';
+    RESCHEDULES[editingItemId] = { status: 'moved', date: date, time: time, label: label };
+    saveAllReschedules();
+    closeReschedulePanel();
+    renderAll();
+  }
+
+  function renameItem(){
+    if(isAddMode || !editingItemId) return;
+    const newText = document.getElementById('rp-text-input').value.trim();
+    if(!newText){ alert('바꿀 이름을 입력해주세요.'); return; }
+    RESCHEDULES[editingItemId] = { status: 'relabeled', label: newText };
+    saveAllReschedules();
+    closeReschedulePanel();
+    renderAll();
+  }
+
+  function cancelItem(){
+    if(!editingItemId) return;
+    RESCHEDULES[editingItemId] = { status: 'cancelled' };
+    saveAllReschedules();
+    closeReschedulePanel();
+    renderAll();
+  }
+
+  // 충돌 시 1안(기존 일정) 확정 -> 이동해온 항목은 취소 처리
+  function choosePlanA(movedItemId){
+    RESCHEDULES[movedItemId] = Object.assign({}, RESCHEDULES[movedItemId], { status: 'cancelled' });
+    saveAllReschedules();
+    renderAll();
+  }
+
+  function askPlanBDisposal(movedItemId, existingItemId){
+    const menu = document.getElementById('menu-' + movedItemId);
+    if(menu) menu.style.display = 'flex';
+  }
+
+  function choosePlanBDelete(existingItemId){
+    RESCHEDULES[existingItemId] = { status: 'cancelled' };
+    saveAllReschedules();
+    renderAll();
+  }
+
+  function openExistingMoveForm(existingItemId){
+    closeReschedulePanel();
+    openEditForm(existingItemId);
+  }
+
+  function renderAll(){
+    // 1. 초기화: 모든 항목 원상복구
+    document.querySelectorAll('[data-item-id]').forEach(function(row){
+      row.style.display = 'grid';
+      row.classList.remove('item-skipped');
+      const noteEl = row.querySelector('.status-note');
+      if(noteEl) noteEl.remove();
+      const badgeEl = row.querySelector('.plan-a-badge');
+      if(badgeEl) badgeEl.remove();
+    });
+    document.querySelectorAll('.moved-banner').forEach(function(el){ el.remove(); });
+    document.querySelectorAll('.day-tbd').forEach(function(el){ el.style.display = ''; });
+
+    // 2. cancelled 처리
+    Object.keys(RESCHEDULES).forEach(function(itemId){
+      const state = RESCHEDULES[itemId];
+      if(!state || state.status !== 'cancelled') return;
+      const row = getItemRow(itemId);
+      if(!row) return;
+      row.classList.add('item-skipped');
+      const note = document.createElement('span');
+      note.className = 'status-note';
+      note.style.cssText = 'font-size:11px; color:var(--coral); margin-left:6px;';
+      note.textContent = '(취소됨)';
+      row.appendChild(note);
+    });
+
+    // 3. moved 처리 (원래 자리 표시 + 배너 삽입). 원래 자리(row)가 없으면 "새로 추가한 일정"임
+    Object.keys(RESCHEDULES).forEach(function(itemId){
+      const state = RESCHEDULES[itemId];
+      if(!state || state.status !== 'moved') return;
+      const row = getItemRow(itemId);
+      const isCustom = !row || row.classList.contains('moved-banner');
+      if(row && !isCustom){
+        row.classList.add('item-skipped');
+        const note = document.createElement('span');
+        note.className = 'status-note';
+        note.style.cssText = 'font-size:11px; color:var(--coral); margin-left:6px;';
+        const dayLabel = DAY_LABELS[state.date] || state.date;
+        note.textContent = '(→ ' + dayLabel + ' ' + state.time + '로 변경됨)';
+        row.appendChild(note);
+      }
+
+      const banner = document.createElement('div');
+      banner.className = 'moved-banner';
+      banner.setAttribute('data-item-id', itemId);
+      banner.style.cssText = 'display:grid; grid-template-columns:80px 1fr; gap:16px; font-size:13px; background:rgba(224,103,63,0.08); border:1.5px dashed var(--coral); border-radius:8px; padding:8px; margin-bottom:8px;';
+
+      const occupant = findNormalOccupant(state.date, state.time, itemId);
+      if(!occupant){
+        const tagText = isCustom ? '새 일정' : '일정 변경됨';
+        const editBtn = isCustom ? '<button class="edit-icon" style="display:inline-flex;" onclick="openEditForm(\'' + itemId + '\', this)">📅</button>' : '';
+        banner.innerHTML = '<b style="color:var(--coral);">' + state.time + '</b><span>' + state.label + ' <span class="alt-tag">' + tagText + '</span>' + editBtn + '</span>';
+        const container = getDayScheduleContainer(state.date);
+        if(container) insertBannerInOrder(container, banner, state.time);
+      } else {
+        // 충돌: 1안(기존)/2안(이동해온 항목) 배지 + 확정 버튼
+        const occLabelHost = occupant.querySelector('span, div');
+        const badgeA = document.createElement('span');
+        badgeA.className = 'alt-tag plan-a-badge';
+        badgeA.style.marginLeft = '6px';
+        badgeA.innerHTML = '1안 <button class="contingency-btn" style="margin-left:4px; padding:1px 7px;" onclick="choosePlanA(\'' + itemId + '\')">확정</button>';
+        if(occLabelHost) occLabelHost.appendChild(badgeA);
+
+        banner.innerHTML =
+          '<b style="color:var(--coral);">' + state.time + '</b>' +
+          '<div style="display:flex; flex-direction:column; gap:6px;">' +
+          '<div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;"><span>' + state.label + '</span><span class="alt-tag">2안</span>' +
+          '<button class="contingency-btn" style="margin-left:4px; padding:1px 7px;" onclick="askPlanBDisposal(\'' + itemId + '\',\'' + occupant.getAttribute('data-item-id') + '\')">확정</button></div>' +
+          '<div id="menu-' + itemId + '" style="display:none; gap:6px; align-items:center; flex-wrap:wrap;">' +
+          '<span style="font-size:12px; color:var(--navy-soft);">1안은 어떻게 할까요?</span>' +
+          '<button class="contingency-btn" onclick="choosePlanBDelete(\'' + occupant.getAttribute('data-item-id') + '\')">1안 삭제</button>' +
+          '<button class="contingency-btn" onclick="openExistingMoveForm(\'' + occupant.getAttribute('data-item-id') + '\')">1안 일정 변경</button>' +
+          '</div></div>';
+        const container = getDayScheduleContainer(state.date);
+        if(container) insertBannerInOrder(container, banner, state.time);
+      }
+    });
+
+    // 3-1. relabeled 처리 (같은 자리, 이름만 교체)
+    Object.keys(RESCHEDULES).forEach(function(itemId){
+      const state = RESCHEDULES[itemId];
+      if(!state || state.status !== 'relabeled') return;
+      const row = getItemRow(itemId);
+      if(!row) return;
+      const contentEl = Array.prototype.slice.call(row.children).find(function(el){
+        return el.tagName !== 'B' && !el.classList.contains('edit-icon');
+      });
+      if(contentEl) contentEl.innerHTML = state.label;
+    });
+
+    // 3-2. 이동해온 일정이 생긴 "미정" 날에는 '일정 미정' 문구를 숨김
+    document.querySelectorAll('.day-tbd').forEach(function(tbd){
+      const ph = tbd.previousElementSibling;
+      if(ph && ph.querySelector('.moved-banner')) tbd.style.display = 'none';
+    });
+  }
+
+  function fetchAllReschedules(){
+    const requestStartedAt = Date.now();
+    fetch('/api/osaka-state?key=all_reschedules')
+      .then(function(r){ return r.json(); })
+      .then(function(data){
+        if(lastRescheduleChange > requestStartedAt) return;
+        RESCHEDULES = (data && data.value) ? data.value : {};
+        renderAll();
+      })
+      .catch(function(e){ console.error('sync load failed', e); });
+  }
+
+  fetchAllReschedules();
+  setInterval(fetchAllReschedules, 20000);
+</script>
+
+</body>
+</html>

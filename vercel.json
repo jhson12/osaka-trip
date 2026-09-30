@@ -1,0 +1,9 @@
+{
+  "functions": {
+    "api/osaka-notion-sync.js": { "maxDuration": 60 }
+  },
+  "rewrites": [
+    { "source": "/expenses", "destination": "/osaka-expenses.html" },
+    { "source": "/((?!api/).*)", "destination": "/index.html" }
+  ]
+}
