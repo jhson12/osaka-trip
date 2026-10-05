@@ -107,7 +107,7 @@
     border:1px solid var(--line);
   }
   .day-stub{
-    width:84px;
+    width:60px;
     flex-shrink:0;
     background:linear-gradient(180deg, var(--sky-deep), var(--sky-mid));
     color:#FFFFFF;
@@ -115,12 +115,12 @@
     flex-direction:column;
     align-items:center;
     justify-content:center;
-    padding:14px 6px;
+    padding:14px 3px;
     border-right:2px dashed rgba(255,255,255,0.5);
     position:relative;
   }
-  .day-stub .wk{font-size:15px; font-weight:700; color:#FFFFFF; margin-top:6px;}
-  .day-stub .date{font-family:'Pretendard Variable','Pretendard',sans-serif; font-size:15px; font-weight:700; color:#FFFFFF;}
+  .day-stub .wk{font-size:14px; font-weight:700; color:#FFFFFF; margin-top:6px;}
+  .day-stub .date{font-family:'Pretendard Variable','Pretendard',sans-serif; font-size:13px; font-weight:700; color:#FFFFFF; white-space:nowrap;}
   .day-body{padding:16px 18px; flex:1;}
   .day-body .day-title{font-family:'Pretendard Variable','Pretendard',sans-serif; font-weight:600; font-size:16px; margin-bottom:6px; color:var(--navy);}
   .day-body .day-tbd{
@@ -378,16 +378,20 @@
         <div style="display:flex; flex-direction:column; gap:8px;">
           <div data-item-id="d2b_0" style="display:grid; grid-template-columns:80px 1fr; gap:16px; font-size:13px;"><b style="color:var(--sky-deep);">7:40</b><span>체크아웃 및 짐 보관</span><button class="edit-icon" onclick="openEditForm('d2b_0', this)">📅</button></div>
           <div data-item-id="d2b_1" style="display:grid; grid-template-columns:80px 1fr; gap:16px; font-size:13px;"><b style="color:var(--sky-deep);">8:00-8:30</b><span>난바 → 우메다역 이동</span><button class="edit-icon" onclick="openEditForm('d2b_1', this)">📅</button></div>
-          <div data-item-id="d2b_2" style="display:grid; grid-template-columns:80px 1fr; gap:16px; font-size:13px;"><b style="color:var(--sky-deep);">9:32-10:15</b><span>가라쿠 열차 (우메다 → 교토)</span><button class="edit-icon" onclick="openEditForm('d2b_2', this)">📅</button></div>
-          <div data-item-id="d2b_3" style="display:grid; grid-template-columns:80px 1fr; gap:16px; font-size:13px;"><b style="color:var(--sky-deep);">10:30-11:00</b><span>교토 철도박물관 이동 (<a href="https://maps.app.goo.gl/25nUymyZheXGaeQt7" target="_blank" style="color:var(--sky-deep); text-decoration:underline;">지도</a>)</span><button class="edit-icon" onclick="openEditForm('d2b_3', this)">📅</button></div>
-          <div data-item-id="d2b_4" style="display:grid; grid-template-columns:80px 1fr; gap:16px; font-size:13px;"><b style="color:var(--sky-deep);">11:00-13:00</b><span>교토 철도박물관 관람</span><button class="edit-icon" onclick="openEditForm('d2b_4', this)">📅</button></div>
-          <div data-item-id="d2b_5" style="display:grid; grid-template-columns:80px 1fr; gap:16px; font-size:13px;"><b style="color:var(--sky-deep);">13:00-14:00</b><span>점심식사</span><button class="edit-icon" onclick="openEditForm('d2b_5', this)">📅</button></div>
-          <div data-item-id="d2b_6" style="display:grid; grid-template-columns:80px 1fr; gap:16px; font-size:13px;"><b style="color:var(--sky-deep);">14:00-14:40</b><span>청수사 이동</span><button class="edit-icon" onclick="openEditForm('d2b_6', this)">📅</button></div>
-          <div data-item-id="d2b_7" style="display:grid; grid-template-columns:80px 1fr; gap:16px; font-size:13px;"><b style="color:var(--sky-deep);">14:40-16:00</b><span>청수사 관람</span><button class="edit-icon" onclick="openEditForm('d2b_7', this)">📅</button></div>
-          <div data-item-id="d2b_8" style="display:grid; grid-template-columns:80px 1fr; gap:16px; font-size:13px;"><b style="color:var(--sky-deep);">16:00-17:00</b><span>교토 → 난바 이동</span><button class="edit-icon" onclick="openEditForm('d2b_8', this)">📅</button></div>
-          <div data-item-id="d2b_9" style="display:grid; grid-template-columns:80px 1fr; gap:16px; font-size:13px;"><b style="color:var(--sky-deep);">17:00-18:30</b><span>저녁식사</span><button class="edit-icon" onclick="openEditForm('d2b_9', this)">📅</button></div>
-          <div data-item-id="d2b_10" style="display:grid; grid-template-columns:80px 1fr; gap:16px; font-size:13px;"><b style="color:var(--sky-deep);">18:30-20:00</b><span>쇼핑 및 자유시간</span><button class="edit-icon" onclick="openEditForm('d2b_10', this)">📅</button></div>
-          <div data-item-id="d2b_11" style="display:grid; grid-template-columns:80px 1fr; gap:16px; font-size:13px;"><b style="color:var(--sky-deep);">20:00</b><span>휴식 및 취침</span><button class="edit-icon" onclick="openEditForm('d2b_11', this)">📅</button></div>
+          <div data-item-id="d2b_2" style="display:grid; grid-template-columns:80px 1fr; gap:16px; font-size:13px;"><b style="color:var(--sky-deep);">9:32-10:20</b><span>가라쿠 열차 (우메다 → 교토)</span><button class="edit-icon" onclick="openEditForm('d2b_2', this)">📅</button></div>
+          <div data-item-id="d2b_3" style="display:grid; grid-template-columns:80px 1fr; gap:16px; font-size:13px;"><b style="color:var(--sky-deep);">10:30-11:30</b><span>청수사 (<a href="https://maps.app.goo.gl/UTPrfuJBRBg8mEWX7" target="_blank" style="color:var(--sky-deep); text-decoration:underline;">기요미즈데라</a>) 이동</span><button class="edit-icon" onclick="openEditForm('d2b_3', this)">📅</button></div>
+          <div data-item-id="d2b_4" style="display:grid; grid-template-columns:80px 1fr; gap:16px; font-size:13px;"><b style="color:var(--sky-deep);">11:30-12:30</b><span>점심식사 (<a href="https://maps.app.goo.gl/oGvrSCNujqUXomgN9" target="_blank" style="color:var(--sky-deep); text-decoration:underline;">교토 규카츠</a>)</span><button class="edit-icon" onclick="openEditForm('d2b_4', this)">📅</button></div>
+          <div data-item-id="d2b_5" style="display:grid; grid-template-columns:80px 1fr; gap:16px; font-size:13px;"><b style="color:var(--sky-deep);">12:30-14:30</b><span>청수사 관람</span><button class="edit-icon" onclick="openEditForm('d2b_5', this)">📅</button></div>
+          <div data-item-id="d2b_6" style="display:grid; grid-template-columns:80px 1fr; gap:16px; font-size:13px;"><b style="color:var(--sky-deep);">14:30-15:30</b><span>청수사 → 교토 철도박물관 이동</span><button class="edit-icon" onclick="openEditForm('d2b_6', this)">📅</button></div>
+          <div data-item-id="d2b_7" style="display:grid; grid-template-columns:80px 1fr; gap:16px; font-size:13px;"><b style="color:var(--sky-deep);">15:30-17:00</b><span>교토 철도박물관 관람</span><button class="edit-icon" onclick="openEditForm('d2b_7', this)">📅</button></div>
+          <div data-item-id="d2b_8" style="display:grid; grid-template-columns:80px 1fr; gap:16px; font-size:13px;"><b style="color:var(--sky-deep);">17:00-17:20</b><span>철도박물관 → 교토역 이동</span><button class="edit-icon" onclick="openEditForm('d2b_8', this)">📅</button></div>
+          <div data-item-id="d2b_9" style="display:grid; grid-template-columns:80px 1fr; gap:16px; font-size:13px;"><b style="color:var(--sky-deep);">17:20-17:45</b><span>신칸센 탑승 (교토역 → 신오사카역)</span><button class="edit-icon" onclick="openEditForm('d2b_9', this)">📅</button></div>
+          <div data-item-id="d2b_10" style="display:grid; grid-template-columns:80px 1fr; gap:16px; font-size:13px;"><b style="color:var(--sky-deep);">17:45-18:30</b><span>닛폰바시 이동 및 호텔 체크인</span><button class="edit-icon" onclick="openEditForm('d2b_10', this)">📅</button></div>
+          <div data-item-id="d2b_11" style="display:grid; grid-template-columns:80px 1fr; gap:16px; font-size:13px;"><b style="color:var(--sky-deep);">18:30-19:30</b><span>도톤보리 포켓몬 프렌다</span><button class="edit-icon" onclick="openEditForm('d2b_11', this)">📅</button></div>
+          <div data-item-id="d2b_12" style="display:grid; grid-template-columns:80px 1fr; gap:16px; font-size:13px;"><b style="color:var(--sky-deep);">19:30-20:30</b><span>도톤보리 <a href="https://maps.app.goo.gl/ZuMu451JJWGwvNpx5" target="_blank" style="color:var(--sky-deep); text-decoration:underline;">스시로</a></span><button class="edit-icon" onclick="openEditForm('d2b_12', this)">📅</button></div>
+          <div data-item-id="d2b_13" style="display:grid; grid-template-columns:80px 1fr; gap:16px; font-size:13px;"><b style="color:var(--sky-deep);">20:30-21:30</b><span><a href="https://maps.app.goo.gl/7uXyMysvD9aoJ3QMA" target="_blank" style="color:var(--sky-deep); text-decoration:underline;">빅카메라</a></span><button class="edit-icon" onclick="openEditForm('d2b_13', this)">📅</button></div>
+          <div data-item-id="d2b_14" style="display:grid; grid-template-columns:80px 1fr; gap:16px; font-size:13px;"><b style="color:var(--sky-deep);">21:30-22:30</b><span>호텔 온천</span><button class="edit-icon" onclick="openEditForm('d2b_14', this)">📅</button></div>
+          <div data-item-id="d2b_15" style="display:grid; grid-template-columns:80px 1fr; gap:16px; font-size:13px;"><b style="color:var(--sky-deep);">22:30</b><span>휴식 및 취침</span><button class="edit-icon" onclick="openEditForm('d2b_15', this)">📅</button></div>
         </div>
       </div>
     </div>
